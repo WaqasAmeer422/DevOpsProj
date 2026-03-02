@@ -1,0 +1,15 @@
+name: File Checker hellofile 
+on: [push] # Run on every push
+
+jobs:
+  check-files:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Code
+        uses: actions/checkout@v4
+      
+      - name: List Files
+        run: ls -R # "run" keyword to show all files in the repo
+      
+      - name: Check Version
+        run: docker --version # Verify Docker is installed on Ubuntu
