@@ -1,0 +1,12 @@
+﻿{
+  "repositoryName": "WaqasAmeer422/DevOpsProj",
+  "pipelineDirectory": "DevOpsProj",
+  "workspaceDirectory": "DevOpsProj\\DevOpsProj",
+  "repositories": {
+    "WaqasAmeer422/DevOpsProj": {
+      "repositoryPath": "DevOpsProj\\DevOpsProj",
+      "lastRunOn": "03/05/2026 16:11:00 +05:00"
+    }
+  },
+  "lastRunOn": "03/05/2026 16:11:00 +05:00"
+}

@@ -1,23 +1,23 @@
-# WHO: This is the Python Runner
-name: Python Local Execution
+name: Build and Save Artifacts
 
-# WHEN: Run every time I push code
 on: [push]
 
-# WHERE: Your local PC (D:\actions-runner)
 jobs:
-  run-script:
-    runs-on: self-hosted  # CRITICAL: This connects to your D: drive runner
-    
+  build-job:
+    runs-on: self-hosted
     steps:
-      # Step 1: Download the code from GitHub to your PC
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # Step 2: Check if Python is actually installed on your Windows PC
-      - name: Verify Python Version
-        run: python --version
+      - name: Run Python Script
+        run: python hello.py > output.txt  # We save the output to a file
 
-      # Step 3: Run the actual script
-      - name: Run Hello World Script
-        run: python hello.py
+      # THIS STEP CREATES THE DOWNLOADABLE LINK
+      - name: Upload Build Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: my-python-app-build   # The name of the zip file
+          path: |
+            hello.py
+            output.txt
+          # You can also use path: ./ to upload everything
