@@ -1,16 +1,23 @@
-name: File Checker hellofile 
-on: [push] # Run on every push
+# WHO: This is the Python Runner
+name: Python Local Execution
 
+# WHEN: Run every time I push code
+on: [push]
+
+# WHERE: Your local PC (D:\actions-runner)
 jobs:
-  check-files:
-    runs-on: ubuntu-latest
+  run-script:
+    runs-on: self-hosted  # CRITICAL: This connects to your D: drive runner
+    
     steps:
-      - name: Get Code
+      # Step 1: Download the code from GitHub to your PC
+      - name: Checkout Code
         uses: actions/checkout@v4
-      
-      - name: List Files
-        run: ls -R # "run" keyword to show all files in the repo
-      
-      - name: Check Version
-        run: docker --version # Verify Docker is installed on Ubuntu
 
+      # Step 2: Check if Python is actually installed on your Windows PC
+      - name: Verify Python Version
+        run: python --version
+
+      # Step 3: Run the actual script
+      - name: Run Hello World Script
+        run: python hello.py
