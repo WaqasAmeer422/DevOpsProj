@@ -1,3 +1,7 @@
+name: Build and Save Artifacts
+
+on: [push]
+
 jobs:
   build-job:
     runs-on: self-hosted
