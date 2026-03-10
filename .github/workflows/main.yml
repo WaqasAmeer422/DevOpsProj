@@ -1,29 +1,17 @@
-name: Build and Save Artifacts
-
-on: [push]
-
 jobs:
   build-job:
     runs-on: self-hosted
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-      - name: System Info
+      - name: Build Task
+        run: echo "Building the application..."
+
+  test-job:
+    runs-on: self-hosted
+    needs: build-job  # This makes the Test job wait for the Build job to finish
+    steps:
+      - name: Run Tests
         run: |
-          echo "Checking Docker version..."
-          docker --version
-          echo "Checking who is running this..."
-          whoami
-
-      - name: Run Python Script
-        run: python hello.py > output.txt  # We save the output to a file
-
-      # THIS STEP CREATES THE DOWNLOADABLE LINK
-      - name: Upload Build Results
-        uses: actions/upload-artifact@v4
-        with:
-          name: my-python-app-build   # The name of the zip file
-          path: |
-            hello.py
-            output.txt
-          # You can also use path: ./ to upload everything
+          echo "Running unit tests..."
+          python -m py_compile hello.py
