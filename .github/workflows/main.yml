@@ -1,4 +1,4 @@
-name: Build and Save Artifacts
+name: Build App
 
 on: [push]
 
@@ -16,7 +16,7 @@ jobs:
       - name: Upload Build Results
         uses: actions/upload-artifact@v4
         with:
-          name: my-python-app-build   # The name of the zip file
+          name: my-app-build   # The name of the zip file
           path: |
             hello.py
             output.txt
