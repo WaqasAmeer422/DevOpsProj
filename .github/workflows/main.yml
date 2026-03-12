@@ -1,21 +1,24 @@
-name: Build and Save Artifacts
+name: Docker CI/CD Pipeline
 
-on: [push]
+on:
+  push:
+    branches: [ "main" ]
 
 jobs:
-  build-job:
-    runs-on: self-hosted
+  build-and-push:
+    runs-on: self-hosted  # Runs on your Docker Desktop machine
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-      - name: Build Task
-        run: echo "Building the application..."
 
-  test-job:
-    runs-on: self-hosted
-    needs: build-job  # This makes the Test job wait for the Build job to finish
-    steps:
-      - name: Run Tests
-        run: |
-          echo "Running unit tests..."
-          python -m py_compile hello.py
+      # Step 1: Log in to Docker Hub using your Secrets
+      - name: Login to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.WAQASAMEER }}" --password-stdin
+
+      # Step 2: Build the Docker Image
+      - name: Build Docker Image
+        run: docker build -t ${{ secrets.WAQASAMEER }}/hello-world-app:latest .
+
+      # Step 3: Push the Image to the Cloud
+      - name: Push to Docker Hub
+        run: docker push ${{ secrets.WAQASAMEER }}/hello-world-app:latest
