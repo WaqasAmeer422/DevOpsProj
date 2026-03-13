@@ -1,11 +1,13 @@
-# Step 1: Use a small Python image
 FROM python:3.9-slim
 
-# Step 2: Set the folder inside the container
 WORKDIR /app
 
-# Step 3: Copy your script into the container
+# Install flask
+RUN pip install flask
+
 COPY hello.py .
 
-# Step 4: Run the script
+# Open port 5000 to the world
+EXPOSE 5000
+
 CMD ["python", "hello.py"]
