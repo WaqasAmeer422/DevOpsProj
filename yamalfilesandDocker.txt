@@ -1,0 +1,43 @@
+Yamal:
+name: Docker CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-and-push:
+    runs-on: self-hosted  # Runs on your Docker Desktop machine
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Step 1: Log in to Docker Hub using your Secrets
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      # Step 2: Build the Docker Image
+      - name: Build Docker Image
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/hello-world-app:latest .
+
+      # Step 3: Push the Image to the Cloud
+      - name: Push to Docker Hub
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/hello-world-app:latest
+
+--------------------
+Docker File
+# Step 1: Use a small Python image
+FROM python:3.9-slim
+
+# Step 2: Set the folder inside the container
+WORKDIR /app
+
+# Step 3: Copy your script into the container
+COPY hello.py .
+
+# Step 4: Run the script
+CMD ["python", "hello.py"]
+

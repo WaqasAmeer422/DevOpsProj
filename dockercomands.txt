@@ -1,0 +1,11 @@
+run -d --name my-bg-app waqasameer/hello-world-app:latest
+
+docker ps
+
+docker start -a my-offline-app
+ 
+ docker create --name my-offline-app waqasameer/hello-world-app:latest
+ 
+ docker pull waqasameer/hello-world-app:latest
+ 
+ pull in any folder by cmd
