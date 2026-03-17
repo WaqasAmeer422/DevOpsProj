@@ -1,13 +1,10 @@
-FROM python:3.9-slim
+FROM rabbitmq:3-management
 
-WORKDIR /app
+# Copy your settings into the image
+COPY rabbitmq.conf /etc/rabbitmq/rabbitmq.conf
+COPY definitions.json /etc/rabbitmq/definitions.json
 
-# Install flask
-RUN pip install flask
+# Ensure permissions are correct
+RUN chown rabbitmq:rabbitmq /etc/rabbitmq/rabbitmq.conf /etc/rabbitmq/definitions.json
 
-COPY hello.py .
-
-# Open port 5000 to the world
-EXPOSE 5000
-
-CMD ["python", "hello.py"]
+EXPOSE 5672 15672
