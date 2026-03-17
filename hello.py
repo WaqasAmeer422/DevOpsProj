@@ -1,4 +1,10 @@
+<<<<<<< HEAD
+print("Hello, World!")
+print("Hello, World!")
+print("Hello 16/3 2026, World!")
+=======
 from flask import Flask
+>>>>>>> e9cd99c89c6fba06260916a492f74b01fdb8988b
 
 app = Flask(__name__)
 
