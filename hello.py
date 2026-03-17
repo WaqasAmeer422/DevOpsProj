@@ -1,17 +1,21 @@
-<<<<<<< HEAD
-print("Hello, World!")
-print("Hello, World!")
-print("Hello 16/3 2026, World!")
-=======
-from flask import Flask
->>>>>>> e9cd99c89c6fba06260916a492f74b01fdb8988b
+import pika
+import time
 
-app = Flask(__name__)
+# Use the container name 'rabbit-srv' as the host
+try:
+    connection = pika.BlockingConnection(
+        pika.ConnectionParameters(host='rabbit-srv')
+    )
+    channel = connection.channel()
 
-@app.route('/')
-def hello_world():
-    return '<h1>Hello, World!</h1><p>This is running inside a Docker Container!</p>'
+    # The queue 'rfid_scans' is already created by your JSON!
+    channel.basic_publish(
+        exchange='',
+        routing_key='TestQueue',
+        body='{"vehicle_id": "ICT-2026", "timestamp": "17:15"}'
+    )
 
-if __name__ == '__main__':
-    # We host it on 0.0.0.0 so it's accessible outside the container
-    app.run(host='0.0.0.0', port=5000)
+    print(" [x] RFID Scan Sent to RabbitMQ!")
+    connection.close()
+except Exception as e:
+    print(f"Connection failed: {e}")
